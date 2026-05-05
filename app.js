@@ -118,6 +118,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const fuelEfficiency = parseFloat(fuelEfficiencyInput.value) || 10;
 
         // Logic
+        if (pickupDist < 0 || tripDist < 0 || tripTime < 0) {
+            alert('Por favor ingresa valores válidos (no negativos).');
+            return;
+        }
+
         const totalDist = pickupDist + tripDist;
         if (totalDist === 0) {
             alert('Por favor ingresa al menos una distancia.');
@@ -155,8 +160,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const income = parseFloat(document.getElementById('shift-income').value) || 0;
         const distance = parseFloat(document.getElementById('shift-distance').value) || 0;
 
-        if (distance === 0) {
-            alert('Por favor ingresa la distancia recorrida.');
+        if (distance <= 0) {
+            alert('Por favor ingresa una distancia válida mayor a 0.');
             return;
         }
 

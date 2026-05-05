@@ -284,10 +284,10 @@ hr {
     margin-bottom: 0;
 }
 
-.result-item.total strong.positive-net {
+strong.positive-net {
     color: var(--success);
 }
 
-.result-item.total strong.negative-net {
+strong.negative-net {
     color: var(--danger);
 }
