@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RendimientoDriver - Calculadora de Rentabilidad</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1><i class="fa-solid fa-car"></i> RendimientoDriver</h1>
+            <p>Calcula tu ganancia real al instante</p>
+        </header>
+
+        <section class="settings-card card">
+            <div class="card-header">
+                <h2><i class="fa-solid fa-gear"></i> Ajustes de tu Vehículo</h2>
+                <button id="toggle-settings" class="icon-btn"><i class="fa-solid fa-chevron-down"></i></button>
+            </div>
+            <div id="settings-content" class="card-content">
+                <div class="input-group">
+                    <label for="tank-capacity">Capacidad del Tanque (Litros)</label>
+                    <input type="number" id="tank-capacity" value="50" step="1">
+                    <small>¿Cuántos litros en total carga tu tanque lleno?</small>
+                </div>
+                <div class="input-group">
+                    <label for="fuel-price">Precio por Litro de Nafta ($)</label>
+                    <input type="number" id="fuel-price" value="2200" step="10">
+                    <small>El costo actual que pagas por cada litro en la gasolinera.</small>
+                </div>
+                <div class="input-group">
+                    <label for="fuel-efficiency">Rendimiento (km/Litro)</label>
+                    <input type="number" id="fuel-efficiency" value="10" step="0.5">
+                    <small>¿Cuántos km recorre con 1 litro?</small>
+                </div>
+                <button id="save-settings" class="btn primary-btn">Guardar Ajustes</button>
+            </div>
+        </section>
+
+        <nav class="tabs">
+            <button class="tab-btn active" data-target="tab-trip">Viaje Individual</button>
+            <button class="tab-btn" data-target="tab-shift">Resumen de Jornada</button>
+        </nav>
+
+        <main>
+            <!-- Tab: Viaje Individual -->
+            <section id="tab-trip" class="tab-content active">
+                <div class="card input-card">
+                    <h2>Datos del Viaje</h2>
+                    <div class="input-group">
+                        <label for="trip-income">Ganancia Ofrecida ($)</label>
+                        <input type="number" id="trip-income" placeholder="Ej. 3500">
+                        <small>El monto de ganancia que te muestra la aplicación en pantalla.</small>
+                    </div>
+                    <div class="input-grid">
+                        <div class="input-group">
+                            <label for="pickup-distance">Distancia Pasajero (km)</label>
+                            <input type="number" id="pickup-distance" placeholder="Ej. 1.5" step="0.1">
+                            <small>Los km que conduces vacío hasta llegar al punto de recogida.</small>
+                        </div>
+                        <div class="input-group">
+                            <label for="trip-distance">Distancia Viaje (km)</label>
+                            <input type="number" id="trip-distance" placeholder="Ej. 8" step="0.1">
+                            <small>Los km que recorrerás con el pasajero a bordo.</small>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="trip-time">Tiempo Estimado (Minutos)</label>
+                        <input type="number" id="trip-time" placeholder="Ej. 20">
+                        <small>El tiempo total estimado que te tomará hacer este viaje (opcional).</small>
+                    </div>
+                    <button id="calc-trip-btn" class="btn calculate-btn">Calcular Rentabilidad</button>
+                </div>
+
+                <div class="card result-card" id="trip-result" style="display: none;">
+                    <div class="verdict-banner" id="trip-verdict"></div>
+                    <div class="result-details">
+                        <div class="result-item">
+                            <span>Ingreso Bruto</span>
+                            <strong id="res-trip-income">$0.00</strong>
+                        </div>
+                        <div class="result-item">
+                            <span>Costo Combustible</span>
+                            <strong id="res-trip-cost" class="expense">-$0.00</strong>
+                        </div>
+                        <div class="result-item" id="hourly-profit-container" style="display: none;">
+                            <span>Ganancia por Hora</span>
+                            <strong id="res-trip-hourly">$0.00</strong>
+                        </div>
+                        <hr>
+                        <div class="result-item total">
+                            <span>Ganancia Neta</span>
+                            <strong id="res-trip-net">$0.00</strong>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab: Resumen de Jornada -->
+            <section id="tab-shift" class="tab-content">
+                <div class="card input-card">
+                    <h2>Datos de la Jornada</h2>
+                    <div class="info-box">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <p>Calcula la rentabilidad total desde que comenzaste a trabajar hasta que finalizaste.</p>
+                    </div>
+                    <div class="input-group">
+                        <label for="shift-income">Ganancia Total del Día ($)</label>
+                        <input type="number" id="shift-income" placeholder="Ej. 45000">
+                        <small>La suma total de todas tus ganancias del día en la app.</small>
+                    </div>
+                    <div class="input-group">
+                        <label for="shift-distance">Kilómetros Totales Recorridos (km)</label>
+                        <input type="number" id="shift-distance" placeholder="Ej. 120" step="1">
+                        <small>Calcula usando el odómetro de tu auto.</small>
+                    </div>
+                    <button id="calc-shift-btn" class="btn calculate-btn">Calcular Jornada</button>
+                </div>
+
+                <div class="card result-card" id="shift-result" style="display: none;">
+                    <div class="verdict-banner" id="shift-verdict"></div>
+                    <div class="result-details">
+                        <div class="result-item">
+                            <span>Ingreso Bruto Total</span>
+                            <strong id="res-shift-income">$0.00</strong>
+                        </div>
+                        <div class="result-item">
+                            <span>Gasto en Combustible</span>
+                            <strong id="res-shift-cost" class="expense">-$0.00</strong>
+                        </div>
+                        <div class="result-item">
+                            <span>Litros Consumidos</span>
+                            <strong id="res-shift-liters">0.00 L</strong>
+                        </div>
+                        <hr>
+                        <div class="result-item total">
+                            <span>Ganancia Neta</span>
+                            <strong id="res-shift-net">$0.00</strong>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>
